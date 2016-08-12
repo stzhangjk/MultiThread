@@ -29,6 +29,7 @@
         <module>003-Volatile</module>
         <module>004-AtomicInteger</module>
         <module>005-Producer_Customer</module>
+        <module>006-DeadLock</module>
     </modules>
 
 
