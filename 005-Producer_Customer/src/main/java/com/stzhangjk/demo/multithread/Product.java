@@ -1,3 +1,5 @@
+package com.stzhangjk.demo.multithread;
+
 /**
  * Created by Grady on 2016.7.27.
  */

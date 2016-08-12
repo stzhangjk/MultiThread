@@ -1,3 +1,5 @@
+package com.stzhangjk.demo.multithread;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
