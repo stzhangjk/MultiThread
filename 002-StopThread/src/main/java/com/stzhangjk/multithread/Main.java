@@ -1,4 +1,4 @@
-package com.stzhangjk.multithread;
+package com.stzhangjk.demo.multithread;
 
 /**
  * Created by Grady on 2015/11/19.

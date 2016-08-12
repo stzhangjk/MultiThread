@@ -1,4 +1,4 @@
-package com.stzhangjk.multithread;
+package com.stzhangjk.demo.multithread;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
