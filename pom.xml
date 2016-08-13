@@ -34,6 +34,7 @@
         <module>008-PipedStream</module>
         <module>009-Wait-Notify-Insert</module>
         <module>010-ThreadLocal</module>
+        <module>011-InheritableThreadLocal</module>
     </modules>
 
 
