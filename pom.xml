@@ -32,6 +32,7 @@
         <module>006-DeadLock</module>
         <module>007-Wait-InterruptedException</module>
         <module>008-PipedStream</module>
+        <module>009-Wait-Notify-Insert</module>
     </modules>
 
 
