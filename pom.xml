@@ -38,6 +38,7 @@
         <module>012-ReentrantLock</module>
         <module>013-Condition</module>
         <module>014-ReentrantReadWriteLock</module>
+        <module>015-Timer</module>
     </modules>
 
 
