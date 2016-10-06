@@ -39,6 +39,7 @@
         <module>013-Condition</module>
         <module>014-ReentrantReadWriteLock</module>
         <module>015-Timer</module>
+        <module>016-Singleton_lazy</module>
     </modules>
 
 
