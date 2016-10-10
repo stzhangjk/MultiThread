@@ -3,7 +3,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 /**
- * Created by Grady on 2016.8.13.
+ * 写线程
  */
 public class ThreadWrite extends Thread {
 

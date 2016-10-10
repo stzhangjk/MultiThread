@@ -1,7 +1,7 @@
 package com.stzhangjk.demo.multithread;
 
 /**
- * Created by Grady on 2016.7.27.
+ * 产品对象
  */
 public class Product {
     private String data;

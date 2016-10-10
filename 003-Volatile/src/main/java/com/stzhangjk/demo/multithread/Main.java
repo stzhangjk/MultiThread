@@ -9,7 +9,7 @@ public class Main {
             RunThread thread = new RunThread();
             thread.start();
             Thread.sleep(5000);
-            thread.setRunnning(false);
+            thread.setRunning(false);
             System.out.println("已设置为false");
         } catch (InterruptedException e) {
             e.printStackTrace();

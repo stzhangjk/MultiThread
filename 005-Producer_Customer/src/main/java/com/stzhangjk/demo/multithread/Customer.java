@@ -3,17 +3,13 @@ package com.stzhangjk.demo.multithread;
 import java.util.List;
 
 /**
- * Created by Grady on 2016.7.27.
  * 消费者
  */
 public class Customer {
-    /**
-     * 同步锁
-     */
+
+    /**同步锁*/
     private String lock;
-    /**
-     * 商品集合
-     */
+    /**产品集合*/
     private List<Product> ps;
 
     public Customer(String lock, List<Product> ps) {

@@ -3,7 +3,6 @@ package com.stzhangjk.demo.multithread;
 import java.util.List;
 
 /**
- * Created by Grady on 2016.7.27.
  * 生产者
  */
 public class Producer {
@@ -12,10 +11,15 @@ public class Producer {
      */
     private String lock;
     /**
-     * 商品集合
+     * 产品集合
      */
     private List<Product> ps;
 
+    /**
+     * 构造函数
+     * @param lock 由上层传入锁对象
+     * @param ps 生产的目的地，也是消费者的消费来源
+     */
     public Producer(String lock, List<Product> ps) {
         this.lock = lock;
         this.ps = ps;

@@ -3,7 +3,7 @@ import java.io.PipedInputStream;
 import java.util.Arrays;
 
 /**
- * Created by Grady on 2016.8.13.
+ * 读线程
  */
 public class ThreadRead extends Thread{
     private PipedInputStream in;
@@ -24,6 +24,14 @@ public class ThreadRead extends Thread{
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if(in != null){
+                    in.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

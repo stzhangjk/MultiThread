@@ -6,20 +6,20 @@ package com.stzhangjk.demo.multithread;
 public class RunThread  extends Thread{
 
     /**volatile,强制访问公共堆栈中的值*/
-    private volatile boolean isRunnning = true;
+    private volatile boolean isRunning = true;
 
-    public boolean isRunnning() {
-        return isRunnning;
+    public boolean isRunning() {
+        return isRunning;
     }
 
-    public void setRunnning(boolean runnning) {
-        isRunnning = runnning;
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 
     @Override
     public void run() {
         System.out.println("进入循环");
-        while(isRunnning){
+        while(isRunning){
 
         }
         System.out.println("退出循环");
