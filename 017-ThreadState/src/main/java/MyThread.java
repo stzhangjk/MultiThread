@@ -8,6 +8,14 @@ public class MyThread extends Thread{
 
     @Override
     public void run() {
-        System.out.println("run:" + getState());
+        try {
+            System.out.println("run:" );
+            System.out.println("before sleep" + getState());
+            System.out.println("sleeping");
+            Thread.sleep(10000);
+            System.out.println("end sleep" + getState());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

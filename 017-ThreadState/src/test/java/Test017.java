@@ -25,4 +25,17 @@ public class Test017 {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testTIMED_TERMINATED(){
+        try{
+            MyThread t = new MyThread();
+            t.start();
+            Thread.sleep(1000);
+            System.out.println(t.getState());
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
