@@ -41,6 +41,7 @@
         <module>015-Timer</module>
         <module>016-Singleton_lazy</module>
         <module>017-ThreadState</module>
+        <module>018-ThreadGroup</module>
     </modules>
 
 

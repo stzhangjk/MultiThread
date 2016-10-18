@@ -273,6 +273,134 @@ public class ThreadRead extends Thread{
 }
 ```
 
+##010-线程私有数据——``ThreadLocal``类
+###1. 使用方法
+```	
+ThreadLocal<T> tl = new ThreadLocal<>();//创建对象
+tl.get();//获取值
+tl.set(value);//设置值
+```
+
+###2. 注意事项
+1. 如果不`set()`一个值，调用`get()`将返回null；
+2. 可重写`initialValue()`方法设置初始值，该方法在线程第一次调用`get()`时调用；
+```
+ @Override
+protected T initialValue() {
+    //可修改初始值不为null
+    return super.initialValue();
+}
+```
+>每个线程都会各自执行这个方法，意味着如果返回`new Date()`，那么每个线程都获得一个**不同**的`Date`对象。
+
+##011-`InheritableThreadLocal`
+可以让子线程从父线程继承下来值。
+###注意事项
+- 重写`initialValue()`和`childValue(T parentValue)`方法设置初始值。
+- 如果不重写`childValue(T parentValue)`，那么不改变`parentValue`，其默认实现就是直接返回`parentValue`。
+```
+protected T childValue(T parentValue) {
+        return parentValue;
+}
+```
+- `childValue()`方法在**创建子线程后、启动子线程前**于**父线程中**调用，这里的父子概念是相对的。
+- 如果子线程获取值之前，父线程`set()`一个新的值，那么子线程获得的**父线程的initialValue初始值**会是**新**的值，即父线程共享value给了子线程，子线程获取的值满足`childValue()`设置的规则，即修饰。
+- 孙线程会获得**父线程的initialValue初始值**+**父线程的childValue修饰值**+**子线程的childValue修饰值**，以此类推。
+
+###实例1——测试父线程set()新值的效果
+main:
+```
+public class Main {
+    public static InheritableThreadLocal<String> itl = new InheritableThreadLocal<String>(){
+        @Override
+        protected String initialValue() {
+            return " 父线程设置的初始值";
+        }
+
+        @Override
+        protected String childValue(String parentValue) {
+            System.out.println(Thread.currentThread().getName() + "执行了childValue");
+            return parentValue + "  父线程修饰的值";
+        }
+    };
+
+    public static void main(String[] args){
+
+        Runnable service = new Service();
+        service.run();
+
+        new Thread(service).start();
+        itl.set(" 新的值");
+        new Thread(service).start();
+
+    }
+}
+
+```
+Service:
+```
+public class Service implements Runnable {
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + Main.itl.get());
+    }
+}
+```
+
+输出：
+```
+main 父线程设置的初始值
+main执行了childValue
+main执行了childValue
+Thread-0 父线程设置的初始值  父线程修饰的值
+Thread-1 新的值  父线程修饰的值
+```
+###实例2——测试孙线程获取到的值
+main:
+```
+public class Main {
+    public static InheritableThreadLocal<String> itl = new InheritableThreadLocal<String>(){
+        @Override
+        protected String initialValue() {
+            return Thread.currentThread().getName() + "设置的初始值";
+        }
+
+        @Override
+        protected String childValue(String parentValue) {
+            System.out.println(Thread.currentThread().getName() + "执行了childValue");
+            return parentValue + Thread.currentThread().getName() + "修饰的值";
+        }
+    };
+
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println(Thread.currentThread().getName() +"获得"+ Main.itl.get());
+        new Thread(new Service()).start();
+    }
+}
+
+```
+Service:
+```
+public class Service implements Runnable {
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName()+"获得" + Main.itl.get());
+
+        new Thread(()->{
+            System.out.println(Thread.currentThread().getName() +"获得"+ Main.itl.get());
+        }).start();
+    }
+}
+```
+输出：
+```
+main获得main设置的初始值
+main执行了childValue
+Thread-0获得main设置的初始值main修饰的值
+Thread-0执行了childValue
+Thread-1获得main设置的初始值main修饰的值Thread-0修饰的值
+```
+
 ##016-懒汉式单例
 
 ###1、在方法上加`synchronized`修饰
@@ -302,7 +430,7 @@ public class Singleton {
         }
         return INSTANCE;
     }
-}
+
 ```
 ###*2、同步代码块
 ```

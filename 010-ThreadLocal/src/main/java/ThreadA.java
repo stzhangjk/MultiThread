@@ -6,7 +6,7 @@ public class ThreadA extends Thread {
     public void run() {
         try {
             for (int i = 0; i < 100; i++) {
-                Main.tl.set("第" + i + "个值");
+                //Main.tl.set("第" + i + "个值");
                 System.out.println("A:" + Main.tl.get());
                 Thread.sleep(100);
             }
