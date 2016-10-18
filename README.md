@@ -303,9 +303,10 @@ protected T childValue(T parentValue) {
         return parentValue;
 }
 ```
-- `childValue()`方法在**创建子线程后、启动子线程前**于**父线程中**调用，这里的父子概念是相对的。
-- 如果子线程获取值之前，父线程`set()`一个新的值，那么子线程获得的**父线程的initialValue初始值**会是**新**的值，即父线程共享value给了子线程，子线程获取的值满足`childValue()`设置的规则，即修饰。
-- 孙线程会获得**父线程的initialValue初始值**+**父线程的childValue修饰值**+**子线程的childValue修饰值**，以此类推。
+- `childValue()`方法在**创建子线程后、启动子线程前**于**父线程中**调用，这里的父子概念是相对的；
+- 如果子线程`get()`之前，父线程`set()`一个新的值，那么子线程获得的**父线程的initialValue初始值**会是**旧**的值，子线程获取的值满足`childValue()`设置的规则，即修饰；
+- 如果父线程`set()`了新值再**创建**子线程，那么新子线程获得的**父线程的initialValue初始值**是**新**的值；
+- 孙线程会获得**父线程的initialValue初始值**+**父线程的childValue修饰值**+**子线程的childValue修饰值**，以此类推；
 
 ###实例1——测试父线程set()新值的效果
 main:

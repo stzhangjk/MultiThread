@@ -14,6 +14,16 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName() +"获得"+ Main.itl.get());
-        new Thread(new Service()).start();
+        new Thread(()->{
+            System.out.println(Thread.currentThread().getName() +"获得"+ Main.itl.get());
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() +"获得"+ Main.itl.get());
+        }).start();
+        Main.itl.set(Thread.currentThread().getName() + "设置新的值");
+        System.out.println(Thread.currentThread().getName() +"获得"+ Main.itl.get());
     }
 }
