@@ -401,6 +401,61 @@ Thread-0获得main设置的初始值main修饰的值
 Thread-0执行了childValue
 Thread-1获得main设置的初始值main修饰的值Thread-0修饰的值
 ```
+##012-ReetrantLock类
+``public class ReentrantLock implements Lock, java.io.Serializable``
+###1、作用
+- 可实现同步,代替`synchronized`关键字
+- 某些场合比`synchronized`更灵活
+
+###2、基础使用方法
+1. new出对象；
+``Lock lock = new ReentrantLock();``
+2. 调用`lock()`方法进入临界区；
+``lock.lock();``
+3. 调用`unlock()`方法退出临界区;
+``lock.unlock();``
+
+###3、高级功能——``synchronized``没有的功能
+1. 公平锁
+`Lock lock = new ReentrantLock(true);`
+在new ReentrantLock对象时，指定一个参数true，可创建一个公平锁。
+默认地，``synchronized``和``ReentrantLock``默认都是非公平锁，即随机地抢占锁，这样可能有的线程会永远得不到锁，即所谓的"不公平"。
+使用公平锁后，采用FIFO先来先得的抢占机制。
+
+2.  更灵活地争夺一个锁
+``boolean tryLock()``
+尝试获得锁，如果成功则返回``true``；
+eg.
+```
+Lock lock = ...;
+if (lock.tryLock()) {
+		try {
+			// manipulate protected state
+		} finally {
+			lock.unlock();
+		}
+} else {
+		// perform alternative actions
+}
+```
+``boolean tryLock(long time,TimeUnit unit) throws InterruptedException``
+在指定的时间内尝试争得锁，成功则返回``true``；
+
+3. 与Condition绑定，实现等待/通知模型
+
+##013-Condition选择性通知
+提供相对于``wait()``/``notify()``更有选择性的线程通知，使调度线程更灵活。
+###1、使用方法
+1. 从Lock对象创建一个绑定的Condition对象；
+``Condition condition = lock.newCondition();``
+2. **进入临界区**后，``condition.await();``使线程等待；
+3. **进入临界区**后，``condition.signal();``唤醒一个线程，
+4. ``condition.signalAll();``唤醒在condition上所有等待的线程；
+>可以创建两个或以上的condition对象，需要的时候，只通知其中一个对象上等待的线程，即所谓的选择性通知。
+
+
+
+
 
 ##016-懒汉式单例
 
