@@ -19,7 +19,7 @@ public class Test015 {
         /*非守护线程方式*/
         //timer = new Timer();
         /*守护线程方式*/
-        timer = new Timer(true);
+        timer = new Timer();
     }
 
     /**
@@ -28,7 +28,9 @@ public class Test015 {
     @Test
     public void testSchedule() throws ParseException {
         TimerTask task = new TestTask();
-        Date date = DateParse.parseDate("2016-9-15 23:13:00");
-        timer.schedule(task,date);
+        Date date = DateParse.parseDate("2016-10-21 21:33:00");
+        timer.schedule(task,date,5000);
     }
+
+
 }

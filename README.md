@@ -456,7 +456,7 @@ if (lock.tryLock()) {
 ##014-ReentrantReadWriteLock读写锁
 >读锁与读操作相关，也称共享锁；
 >写锁与写操作相关，也称排他锁；
->多个读锁之间不互斥；
+>多个读锁之间不互斥，可以异步执行；
 >写锁与读锁或者读锁都互斥；
 
 ###1、获取读/写锁
@@ -468,6 +468,42 @@ lock.readLock().unlock();/lock.writeLock().unlock();
 ```
 ###2、注意事项
 必须是在同一个``ReentrantReadWriteLock``对象上调用``lock.readLock().lock();``或者``lock.writeLock().lock();``才有以上三种效果；
+
+##015-Timer定时任务
+顾名思义用于定时任务，主要方法`schedule()`
+###1、使用方法
+####1）`schedule()`方法的定义：
+```
+void schedule(TimerTask task, Date time)在指定时间执行指定任务，只运行一次，如果time在当前时间之前，则立即执行；
+void schedule(TimerTask task, long delay)在指定延迟后执行指定任务，只运行一次；
+void schedule(TimerTask task, Date firstTime, long period)
+在指定时间执行指定的周期任务；
+如果firstTime已经过了，则立即执行；
+如果任务的耗时大于指定的周期，则下一次任务也会被延迟。
+void schedule(TimerTask task, long delay, long period)在指定延迟后执行指定的周期任务；
+```
+参数解释：
+- task:要执行的任务，继承抽象类``TimerTask``并实现`run()`方法。
+```
+public class TestTask extends TimerTask{
+    @Override
+    public void run() {
+    }
+}
+```
+- period：周期，ms。
+- delay：延迟，ms。
+- time/firstTime：指定的时间。
+
+####2）`scheduleAtFixedRate()`方法
+```
+scheduleAtFixedRate(TimerTask task, Date firstTime, long period)
+scheduleAtFixedRate(TimerTask task, long delay, long period)
+```
+参数含义和`schedule()`一样。
+
+####3）`schedule()`和`scheduleAtFixedRate()`的区别
+待补充
 
 
 ##016-懒汉式单例
