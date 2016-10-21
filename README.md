@@ -453,8 +453,21 @@ if (lock.tryLock()) {
 4. ``condition.signalAll();``唤醒在condition上所有等待的线程；
 >可以创建两个或以上的condition对象，需要的时候，只通知其中一个对象上等待的线程，即所谓的选择性通知。
 
+##014-ReentrantReadWriteLock读写锁
+>读锁与读操作相关，也称共享锁；
+>写锁与写操作相关，也称排他锁；
+>多个读锁之间不互斥；
+>写锁与读锁或者读锁都互斥；
 
-
+###1、获取读/写锁
+```
+ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+lock.readLock().lock();/lock.writeLock().lock();
+……
+lock.readLock().unlock();/lock.writeLock().unlock();
+```
+###2、注意事项
+必须是在同一个``ReentrantReadWriteLock``对象上调用``lock.readLock().lock();``或者``lock.writeLock().lock();``才有以上三种效果；
 
 
 ##016-懒汉式单例
